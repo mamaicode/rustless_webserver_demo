@@ -1,5 +1,5 @@
 steps:
-  # Build the application image
+  # Build the application image and publish to container registry
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: "bash"
     args:
@@ -9,7 +9,7 @@ steps:
         -t gcr.io/$PROJECT_ID/${_SERVICE_NAME}:latest . && \
         docker push gcr.io/$PROJECT_ID/${_SERVICE_NAME}:latest
 
-  # Deploy to cloud run US
+  # Deploy to cloud run US central region
   - name: "gcr.io/cloud-builders/gcloud"
     entrypoint: "bash"
     args:
@@ -21,6 +21,6 @@ steps:
         --allow-unauthenticated
 
 timeout: 800s
-
+# Change name if necessary for another service
 substitutions:
   _SERVICE_NAME: rustless
